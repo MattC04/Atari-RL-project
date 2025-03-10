@@ -6,7 +6,6 @@ import torch.optim as optim
 import random
 import time
 import os
-
 from preprocess import PreprocessFrame, FrameStack
 from model import DQN
 from replay import ReplayMemory, Transition
