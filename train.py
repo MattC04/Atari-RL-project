@@ -1,39 +1,43 @@
-import torch
-import torch.nn as nn
 import gymnasium as gym
-import numpy as np
-import os
-from dqn import DQN, get_optimizer
+import torch
+import torch.optim as optim
+import random
+import cv2
+from dqn import DQN
+from replay_memory import ReplayMemory
+from environment import PreprocessFrame, FrameStack
+from utils import optimize_model
 
-
-def train_dqn(env_name, num_episodes=100000, batch_size=32, gamma=0.99, learning_rate=1e-4, target_update=1000, epsilon_decay=1000000):
+def train_dqn(env_name, num_episodes=100000):
     env = gym.make(env_name)
-    num_actions = env.action_space.n
-    input_shape = env.observation_space.shape
-    
+    env = PreprocessFrame(env, shape=(84, 84))
+    env = FrameStack(env, 4)
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    policy_net = DQN(input_shape, num_actions).to(device)
-    target_net = DQN(input_shape, num_actions).to(device)
+    policy_net = DQN(env.observation_space.shape, env.action_space.n).to(device)
+    target_net = DQN(env.observation_space.shape, env.action_space.n).to(device)
     target_net.load_state_dict(policy_net.state_dict())
     target_net.eval()
-    
-    optimizer = get_optimizer(policy_net, learning_rate)
-    
+
+    optimizer = optim.Adam(policy_net.parameters(), lr=1e-4)
+    memory = ReplayMemory(100000)
+
     for episode in range(num_episodes):
         state = env.reset()
         total_reward = 0
         done = False
-        
         while not done:
-            epsilon = max(0.1, 1 - episode / epsilon_decay)
-            action = env.action_space.sample() if np.random.rand() < epsilon else policy_net(torch.tensor(state, dtype=torch.float32).unsqueeze(0).to(device)).argmax().item()
+            action = random.randrange(env.action_space.n)
             next_state, reward, done, _ = env.step(action)
+            memory.push(state, action, reward, next_state, done)
             state = next_state
             total_reward += reward
-        
-        if episode % target_update == 0:
+
+            optimize_model(policy_net, target_net, memory, optimizer, 32, 0.99, device)
+
+        print(f"Episode {episode} | Reward: {total_reward}")
+
+        if episode % 1000 == 0:
             target_net.load_state_dict(policy_net.state_dict())
-        
-        print(f"Episode {episode}: Reward {total_reward}")
-    
-    torch.save(policy_net.state_dict(), "dqn_model.pth")
+
+    return policy_net, target_net, [], []
