@@ -64,10 +64,9 @@ def train_dqn(env_name,
               resume_target_net_state=None,
               resume_optimizer_state=None):
     
-    global stop_training  # This global variable is expected from the control module.
-    stop_training = control.stop_training
-
-    env = gym.make(env_name)
+   
+    # Create the environment with render_mode='human' to enable live gameplay rendering
+    env = gym.make(env_name, render_mode='human')
     env = PreprocessFrame(env, shape=(84, 84))  # 84x84 resolution
     env = FrameStack(env, 4)
     num_actions = env.action_space.n
@@ -105,17 +104,20 @@ def train_dqn(env_name,
         memory = ReplayMemory(replay_capacity)
     
     for episode in range(start_episode, num_episodes):
-        if stop_training:
+        if control.stop_training:
             print("Training stopped by user.")
             break
         state = env.reset()
         total_reward = 0
         done = False
         while not done:
-            if stop_training:
+            if control.stop_training:
                 print("Stopping current episode due to stop signal.")
                 done = True
                 break
+            
+            # Render live gameplay during training
+            env.unwrapped.render()
             
             epsilon = final_epsilon + (initial_epsilon - final_epsilon) * np.exp(-1. * steps_done / epsilon_decay)
             if random.random() < epsilon:
@@ -144,7 +146,7 @@ def train_dqn(env_name,
         episode_rewards.append(total_reward)
         print(f"Episode {episode:03d} | Reward: {int(total_reward):3d} | Epsilon: {epsilon:.3f}")
         
-        if stop_training:
+        if control.stop_training:
             checkpoint = {
                 "episode": episode + 1,  # resume from the next episode
                 "steps_done": steps_done,
@@ -159,6 +161,6 @@ def train_dqn(env_name,
             print("Checkpoint saved at episode", episode)
             break
 
-    if not stop_training and os.path.exists("dqn_checkpoint.pth"):
+    if not control.stop_training and os.path.exists("dqn_checkpoint.pth"):
         os.remove("dqn_checkpoint.pth")
     return policy_net, target_net, losses, episode_rewards
