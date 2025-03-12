@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+#Defining a global variable to stop training
+#create a callback function to stop training
 stop_training = False
 def stop_callback(event, x, y, flags, param):
     global stop_training

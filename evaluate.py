@@ -3,6 +3,11 @@ import time
 import torch
 import numpy as np
 
+# This function evaluates a trained policy network (policy_net) by running it through several episodes
+# of a given Gymnasium environment (env). It uses the policy network to choose actions based on the current
+# state, performs these actions within the environment, and accumulates the rewards obtained in each episode.
+# It can render the environment in real-time to visually assess the policy's performance.
+
 def evaluate_policy(policy_net, env, num_episodes=10, device=torch.device("cpu"), render=False):
     rewards = []
     for i in range(num_episodes):

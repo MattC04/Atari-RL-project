@@ -2,22 +2,22 @@ import os
 import torch
 import cv2
 import gymnasium as gym
-
-import control  # sets up the control window and global stop_training
+import control  # sets up the control window and fix global variable stop_training
 from train import train_dqn
 from evaluate import evaluate_policy
 from preprocess import PreprocessFrame, FrameStack
 
+#Overview of file: Entry point of the project
+#Intializes the environment, model, replay memory
+#coordinates the training loop so that checkpoints can be saved
 if __name__ == "__main__":
-    import ale_py  # Required for ALE environments
-    
-    # 1. Verify environment actions
+    import ale_py
     env_name = "ALE/Assault-v5"
     verification_env = gym.make(env_name)
     print("Action meanings:", verification_env.unwrapped.get_action_meanings())
     verification_env.close()
     
-    # 2. Check for an existing checkpoint
+    #debugging below: checkpoint path file keeps appearing after training
     checkpoint_path = "dqn_checkpoint.pth"
     if os.path.exists(checkpoint_path):
         checkpoint = torch.load(checkpoint_path, map_location="cpu")
@@ -28,7 +28,6 @@ if __name__ == "__main__":
         memory = checkpoint["memory"]
         resume_policy_net_state = checkpoint["policy_net_state_dict"]
         resume_target_net_state = checkpoint["target_net_state_dict"]
-        # Do not resume optimizer state since we're switching to Adam
         resume_optimizer_state = None
         print(f"Resuming training from episode {start_episode}")
     else:
@@ -41,7 +40,7 @@ if __name__ == "__main__":
         resume_target_net_state = None
         resume_optimizer_state = None
 
-    # 3. Training phase (this will resume if a checkpoint was found)
+    #training face, resumes after checkpoint
     policy_net, target_net, losses, episode_rewards = train_dqn(
         env_name,
         num_episodes=100000,
@@ -57,13 +56,12 @@ if __name__ == "__main__":
         resume_optimizer_state=resume_optimizer_state
     )
     
-    # 4. Save the trained model (if training finished normally)
+    #save the trained model
     torch.save(policy_net.state_dict(), "dqn_assault.pth")
-
-    # Destroy the control window after training
+    #close windoow when complete
     cv2.destroyWindow("Control")
 
-    # 5. Evaluation with rendering (using 84x84 window size)
+    #Live rendering of the trained model/get rid of to decrease time to train
     render_env = gym.make(env_name, render_mode='human')
     render_env = PreprocessFrame(render_env, shape=(84, 84))
     render_env = FrameStack(render_env, 4)

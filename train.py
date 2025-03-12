@@ -9,9 +9,15 @@ import os
 from preprocess import PreprocessFrame, FrameStack
 from model import DQN
 from replay import ReplayMemory, Transition
-
-# Import control for the stop callback and control window variables
 import control
+
+#Overview of file
+#Contains the logic for training the DQN agent, and implements the main training loop
+#training loops interacts with gym environment using policy network
+#Handles epsilon greedy action selection by balancing the exploration and exploitation
+#once in a while syncs policy netwrok with a target netwrok for stability
+#logs training performance and saves checkpoints
+# Import control for the stop callback and control window variables
 
 def optimize_model(policy_net, target_net, memory, optimizer, batch_size, gamma, device):
     if len(memory) < batch_size:

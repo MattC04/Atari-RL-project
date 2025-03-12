@@ -1,6 +1,13 @@
 import torch
 import torch.nn as nn
 
+#Overview of file
+#Defines the DQN architecture using CNN designed for Atari gameplay
+#processes the game input frames through convulational layers to extract meaningful features
+#Two convulational layers (first layer:16 filters, Second layer: 32 filters)
+#Computes map dimensions to connect the convolutional output to the fully connected layers
+#fully connected layers interpret extracted visual features and maps them to Q-values (expected rewards for each possible action)
+
 class DQN(nn.Module):
     """Convolutional Neural Network for approximating Q-values."""
     def __init__(self, input_shape, num_actions):

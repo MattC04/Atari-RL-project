@@ -3,6 +3,12 @@ import cv2
 import numpy as np
 from collections import deque
 
+#Overview of file
+#Converts raw Atari game frames into a suitable format for NN input
+#Basically helps agent recognize important temporal and spatial patterns
+#There are two classes: 
+# PreprocessFrame(converts RGB grames to grayscale, resizes to 84x84 pixels)
+# Framestack(stacks frames together, helps agent perceive movement and dynamics within the environment)
 class PreprocessFrame(gym.ObservationWrapper):
     """Converts Atari RGB frames to grayscale and resizes them to the specified shape.
        Note: The provided shape is in (height, width) order.
