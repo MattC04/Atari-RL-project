@@ -58,8 +58,7 @@ This project implements an RL agent using **Deep Q-Networks (DQN)** to train an 
 - Performance varies based on hyperparameters, training duration, and game complexity.  
 
 ## Gameplay Video  
-https://github.com/MattC04/Atari-RL-project/issues/1#issue-2931055835
----
+https://github.com/user-attachments/assets/11857949-7f2a-45a2-8bf2-d5bdc72fd55e
 
 ## Installation & Setup  
 To run this project locally, follow these steps:
