@@ -1,7 +1,7 @@
 # 🎮 Atari Reinforcement Learning 
 
 ## Motivation  
-Reinforcement Learning has been gaining a lot of traction as a powerful approach to train AI agents for complex decision-making tasks. This project applies RL to the classic Atari Assault game, leveraging deep learning techniques to train an AI to play autonomously. The goal is to explore how RL can learn game mechanics, improve performance over time, and adapt strategies to maximize rewards.
+Reinforcement Learning has been gaining a lot of traction as a powerful approach to train AI agents for complex decision-making tasks. This project applies RL to the classic Atari Assault game, leveraging deep learning techniques to train an AI to play autonomously. The goal is to explore how RL can learn game mechanics, improve performance over time, and adapt strategies to maximize rewards. My personal goal was to learn as much as I could about deep reinforcement learning and having fun while doing so!
 
 ## Project Overview  
 This project implements an RL agent using **Deep Q-Networks (DQN)** to train an AI for playing Atari games efficiently. The environment is simulated using **OpenAI Gym's Atari framework**, and the model is trained using PyTorch.
@@ -59,6 +59,9 @@ This project implements an RL agent using **Deep Q-Networks (DQN)** to train an 
 
 ## Gameplay Video  
 https://github.com/user-attachments/assets/11857949-7f2a-45a2-8bf2-d5bdc72fd55e
+
+### My Personal Gameplay (to demonstrate the average human, maybe below average)
+https://github.com/user-attachments/assets/2e478b42-4d1a-4220-961c-8f18698e8886
 
 ## Installation & Setup  
 To run this project locally, follow these steps:
