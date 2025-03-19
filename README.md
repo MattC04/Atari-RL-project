@@ -59,7 +59,7 @@ This project implements an RL agent using **Deep Q-Networks (DQN)** to train an 
 
 ## Gameplay Video  
 
-<video src="gameplay.mp4" controls width="600"></video>
+[<video src="gameplay.mp4" controls width="600"></video>](https://github.com/MattC04/Atari-RL-project/issues/1#issue-2931055835)
 
 ---
 
