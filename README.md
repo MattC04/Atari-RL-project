@@ -58,7 +58,8 @@ This project implements an RL agent using **Deep Q-Networks (DQN)** to train an 
 - Performance varies based on hyperparameters, training duration, and game complexity.  
 
 ## Gameplay Video  
-[![Watch the gameplay](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://youtu.be/KkTDsshPSU0)  
+[![Watch the gameplay]https://github.com/user-attachments/assets/816d9cfa-983d-44e4-8752-9cc87e3bc304
+ 
 
 To upload a video:  
 1. Upload gameplay to **YouTube**.  
@@ -107,6 +108,7 @@ This will run the trained agent and display performance metrics.
 ---
 
 ## Contributors  
+
 - **[MattC04](https://github.com/MattC04)** - Lead Developer  
 
 ---
