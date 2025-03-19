@@ -59,7 +59,7 @@ This project implements an RL agent using **Deep Q-Networks (DQN)** to train an 
 
 ## Gameplay Video  
 [![Watch the gameplay]
-<video src="Playing Atari with Reinforcement Learning.mp4" controls width="600"></video>
+<video src="Playing-Atari-with-Reinforcement-Learning.mp4" controls width="600"></video>
 
 ---
 
