@@ -19,7 +19,7 @@ This project implements an RL agent using **Deep Q-Networks (DQN)** to train an 
 
 - **Trained the Agent:**  
   - Used **epsilon-greedy exploration** to balance exploration and exploitation.  
-  - Stored experiences in a replay buffer and trained the model in batches.  
+  - Stored experiences in a replay buffer and trained the model in batches.   - Added dynamic hyperparameter tuning support
   - Implemented a **control mechanism** to manually stop training.  
   - Checkpoints were saved to resume training efficiently.  
 
