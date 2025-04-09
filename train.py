@@ -169,3 +169,21 @@ def train_dqn(env_name,
     if not control.stop_training and os.path.exists("dqn_checkpoint.pth"):
         os.remove("dqn_checkpoint.pth")
     return policy_net, target_net, losses, episode_rewards
+
+'''
+def compute_moving_average(data, window_size=100):
+    """Compute the moving average of the data over the specified window size."""
+    return np.convolve(data, np.ones(window_size) / window_size, mode='valid')
+
+def find_convergence_episode(moving_avg, threshold, consecutive=10):
+    count = 0
+    for i, value in enumerate(moving_avg):
+        if value >= threshold:
+            count += 1
+            if count >= consecutive:
+                # Adjust the index by adding the window size (e.g., 100 episodes)
+                return i + consecutive
+        else:
+            count = 0
+    return None
+'''
